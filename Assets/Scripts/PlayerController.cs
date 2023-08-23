@@ -45,13 +45,13 @@ public class PlayerController: MonoBehaviour
     {
         if (Managers.Gameplay.GameOver) return;
         
-        if (transform.localScale.y <= 0.15f && !Managers.Gameplay.GameOver)
+        if (transform.localScale.y <= 0.15f)
             EventManager.Broadcast(Events.PlayerLoseEvent);
 
-        if (transform.position.y < 1.1f) if (CheckPathToDoor()) Jump(_doorTransform.position);
+        //if (transform.position.y < 1.1f) if (CheckPathToDoor()) Jump(_doorTransform.position);
         
-        if (!_isJumping)
-        {
+        //if (!_isJumping)
+        //{
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
             {
                 if (_currentFireball == null)
@@ -77,7 +77,7 @@ public class PlayerController: MonoBehaviour
                 }
             }
 
-        }
+       // }
     }
 
     private void OnPathCleared(PathIsClearEvent evt)
@@ -97,7 +97,7 @@ public class PlayerController: MonoBehaviour
         else jumpsNum = (int)Math.Round(distance);
         float duration = (float)jumpsNum / 2;
         //Debug.Log("duration " + duration);
-        _body.DOJump(target, _jumpForce, jumpsNum, duration);
+        if (_body != null) _body.DOJump(target, _jumpForce, jumpsNum, duration);
         StartCoroutine(WaitForJumps(target));
     }
 
@@ -139,7 +139,7 @@ public class PlayerController: MonoBehaviour
         //_currentFireballTransform.localScale += new Vector3(FIREBALL_SCALE_FACTOR, FIREBALL_SCALE_FACTOR, FIREBALL_SCALE_FACTOR);
 
         //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
-        
+
         transform.DOScale(transform.localScale.y - PLAYER_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
         _currentFireballTransform.DOScale(_currentFireballTransform.localScale.y + FIREBALL_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
         
@@ -155,7 +155,7 @@ public class PlayerController: MonoBehaviour
     {
         while (Vector3.Distance(transform.position, target) > 0.6f)
         {
-            Debug.Log(Vector3.Distance(transform.position, target));
+            //Debug.Log(Vector3.Distance(transform.position, target));
             yield return new WaitForSeconds(0.1f);
         }
 

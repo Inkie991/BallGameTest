@@ -28,14 +28,14 @@ public class Fireball : MonoBehaviour
     public void Shoot(Transform target)
     {
         float duration = Vector3.Distance(transform.position, target.position) / 5;
-        _body.DOMove(target.position, duration);
+        if (_body != null) _body.DOMove(target.position, duration);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        _body.DOKill();
         _isColliding = true;
         _collisionPoint = transform.position;
-        _body.DOKill();
         _splashVFX.Play();
         ObstacleInfection();
     }
