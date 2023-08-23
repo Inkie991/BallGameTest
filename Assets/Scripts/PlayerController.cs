@@ -48,10 +48,10 @@ public class PlayerController: MonoBehaviour
         if (transform.localScale.y <= 0.15f)
             EventManager.Broadcast(Events.PlayerLoseEvent);
 
-        //if (transform.position.y < 1.1f) if (CheckPathToDoor()) Jump(_doorTransform.position);
+        if (transform.position.y < 1.1f) if (CheckPathToDoor()) Jump(_doorTransform.position);
         
-        //if (!_isJumping)
-        //{
+        if (!_isJumping)
+        {
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
             {
                 if (_currentFireball == null)
@@ -77,7 +77,7 @@ public class PlayerController: MonoBehaviour
                 }
             }
 
-       // }
+        }
     }
 
     private void OnPathCleared(PathIsClearEvent evt)
@@ -111,19 +111,19 @@ public class PlayerController: MonoBehaviour
         
         bool center = Physics.Raycast(tempPos,
             _doorTransform.position - tempPos, out hit, maxDitance);
-        if (hit.collider.CompareTag("Obstacle")) center = true;
+        if (!hit.collider.CompareTag("Door")) center = true;
         else center = false;
         
         Vector3 rightPoint = new Vector3(tempPos.x + tempScale/2, tempPos.y, tempPos.z);
         bool right = Physics.Raycast(rightPoint,
             _doorTransform.position - rightPoint, out hit, maxDitance - 1f);
-        if (hit.collider.CompareTag("Obstacle")) right = true;
+        if (!hit.collider.CompareTag("Door")) right = true;
         else right = false;
         
         Vector3 leftPoint = new Vector3(tempPos.x, tempPos.y, tempPos.z + tempScale / 2);
         bool left = Physics.Raycast(leftPoint,
             _doorTransform.position - leftPoint,out hit, maxDitance - 1f);
-        if (hit.collider.CompareTag("Obstacle")) left = true;
+        if (!hit.collider.CompareTag("Door")) left = true;
         else left = false;
         
         //Debug.Log(left + " " + center + " " + right);
