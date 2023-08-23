@@ -137,12 +137,12 @@ public class PlayerController: MonoBehaviour
         //Do it with DOTween
         //transform.localScale = new Vector3(PLAYER_SCALE_FACTOR, PLAYER_SCALE_FACTOR, PLAYER_SCALE_FACTOR);
         //_currentFireballTransform.localScale += new Vector3(FIREBALL_SCALE_FACTOR, FIREBALL_SCALE_FACTOR, FIREBALL_SCALE_FACTOR);
+
+        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
         
+        transform.DOScale(transform.localScale.y - PLAYER_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
+        _currentFireballTransform.DOScale(_currentFireballTransform.localScale.y + FIREBALL_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
         
-        //transform.DOScale(transform.localScale.y - PLAYER_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
-        //_currentFireballTransform.DOScale(_currentFireballTransform.localScale.y + FIREBALL_SCALE_FACTOR, Managers.Gameplay.scalerStepTime);
-        
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
         _currentFireballTransform.position = new Vector3(_currentFireballTransform.position.x,
             _currentFireballTransform.localScale.y / 2 + 0.1f,
             _currentFireballTransform.position.z);
